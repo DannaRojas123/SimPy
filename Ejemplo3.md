@@ -83,6 +83,9 @@ Interrupciones por falla: 4
 ## Puntos clave
 #### 1. simpy.PreemptiveResource(env, capacity=1):
 A diferencia de un Resource normal, este permite que un proceso de mayor prioridad interrumpa a uno que ya está corriendo, en vez de esperar su turno.
-request(priority=0) vs request(priority=1): las fallas piden el recurso con prioridad 0 (más alta = número menor), así que le "quitan" la máquina a la fabricación de piezas (prioridad 1) aunque esté a medias.
-try / except simpy.Interrupt: así el código de la pieza detecta cuando fue interrumpida a medio proceso, calcula cuánto tiempo de trabajo le faltaba, y retoma justo ahí después de la reparación — en vez de perder todo el progreso.
-tiempo_restante -= (env.now - inicio): es lo que permite que el trabajo parcial no se pierda; simula el escenario realista donde una pieza a medio hacer sigue "a medio hacer" después de arreglar la máquina.
+#### 2. request(priority=0) vs request(priority=1):
+Las fallas piden el recurso con prioridad 0 (más alta = número menor), así que le "quitan" la máquina a la fabricación de piezas (prioridad 1) aunque esté a medias.
+#### 3. try / except simpy.Interrupt:
+Así el código de la pieza detecta cuando fue interrumpida a medio proceso, calcula cuánto tiempo de trabajo le faltaba, y retoma justo ahí después de la reparación — en vez de perder todo el progreso.
+#### 4. tiempo_restante -= (env.now - inicio):
+Es lo que permite que el trabajo parcial no se pierda; simula el escenario realista donde una pieza a medio hacer sigue "a medio hacer" después de arreglar la máquina.
