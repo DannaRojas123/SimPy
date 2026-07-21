@@ -95,3 +95,13 @@ Auto 29 llega en t=95.0, necesita 28L
 Auto 9 termino de cargar en t=97.0, tanque queda en 10L
 Auto 30 llega en t=99.0, necesita 32L
 ```
+
+## Puntos clave:
+#### 1. simpy.Container(env, capacidad, init=...):
+A diferencia de Resource (que se ocupa), el Container modela una cantidad continua que se consume, cada auto le resta litros con gasolinera.get(litros).
+#### 2. gasolinera.put(faltante):
+Así el camión de reabastecimiento devuelve gasolina al tanque.
+#### 3. monitor_tanque:
+Un proceso separado que corre en paralelo, revisando cada 5 minutos si el nivel bajó del umbral, así se dispara el reabastecimiento automáticamente sin que los autos tengan que preocuparse por eso.
+#### 4. bomba = simpy.Resource(env, capacity=1):
+Aquí sí se combina con un Resource normal porque solo hay una bomba física, dos cosas compitiendo (litros disponibles y acceso a la bomba) a la vez.
